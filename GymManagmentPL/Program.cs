@@ -1,4 +1,13 @@
+using GymManagmentBLL;
+using GymManagmentBLL.Services.Classes;
+using GymManagmentBLL.Services.Interface;
+using GymManagmentBLL.ViewModels.AnalyticsViewModels;
 using GymManagmentDAL.Data.Context;
+using GymManagmentDAL.Repository.Classes;
+using GymManagmentDAL.Repository.Interfaces;
+
+//using GymManagmentDAL.Repository.Classes;
+//using GymManagmentDAL.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -19,7 +28,11 @@ namespace GymManagmentPL
 
             }
                 );
-
+            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            builder.Services.AddAutoMapper(x=>x.AddProfile(new MappingProfile()));
+            builder.Services.AddScoped<IAnalyticsService,AnalyticsService>();
+            builder.Services.AddScoped<IMemberService,MemberService>();
+            builder.Services.AddScoped<ITrainerService,TrainerService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
