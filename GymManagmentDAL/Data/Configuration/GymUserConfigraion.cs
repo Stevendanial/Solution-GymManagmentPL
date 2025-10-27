@@ -14,17 +14,17 @@ namespace GymManagmentDAL.Data.Configuration
         public void Configure(EntityTypeBuilder<T> builder)
         {
             builder.Property(x => x.Name)
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(50)")
                 .HasMaxLength(50);
 
             builder.Property(x => x.Email)
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(100)")
                 .HasMaxLength(100);
 
             builder.ToTable(tb => {
 
                 tb.HasCheckConstraint("GymUserValidEmailCheck", "Email like '_%@_%._%'");
-                tb.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%");
+                tb.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%'");
             });
 
             //unique non clustered index
@@ -33,24 +33,24 @@ namespace GymManagmentDAL.Data.Configuration
 
 
             builder.Property(x => x.Phone)
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(11)")
                 .HasMaxLength(11);
 
             builder.OwnsOne(x => x.Address, addressbuilder =>
             {
                 addressbuilder.Property(x => x.Street)
                               .HasColumnName("street")
-                              .HasColumnType("varchar")
+                              .HasColumnType("varchar(50)")
                               .HasMaxLength(50);
 
                 addressbuilder.Property(x => x.City)
                               .HasColumnName("city")
-                              .HasColumnType("varchar")
+                              .HasColumnType("varchar(50)")
                               .HasMaxLength(30);
 
                 addressbuilder.Property(x => x.BuilderNumber)
                              .HasColumnName("builderNumber")
-                             .HasColumnType("varchar")
+                             .HasColumnType("varchar(50)")
                              .HasMaxLength(50);
 
             });

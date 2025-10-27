@@ -14,11 +14,11 @@ namespace GymManagmentDAL.Data.Configuration
         public void Configure(EntityTypeBuilder<Plan> builder)
         {
             builder.Property(x => x.Name)
-                   .HasColumnType("varchar")
+                   .HasColumnType("varchar(50)")
                    .HasMaxLength(50);
 
             builder.Property(x => x.Description)
-                   .HasColumnType("varchar")
+                   .HasColumnType("varchar(50)")
                    .HasMaxLength(200);
 
             builder.Property(x => x.Price)

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GymManagmentBLL.Services.Interface;
 using GymManagmentBLL.ViewModels.SessionViewModels;
+using GymManagmentBLL.ViewModels.TrainerViewModel;
 using GymManagmentDAL.Entities;
 using GymManagmentDAL.Repository.Interfaces;
 using Microsoft.Extensions.Options;
@@ -13,7 +14,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace GymManagmentBLL.Services.Classes
 {
-    internal class SessionService : ISessionService
+    public class SessionService : ISessionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -141,6 +142,19 @@ namespace GymManagmentBLL.Services.Classes
             return true;
 
 
+        }
+
+        public IEnumerable<TrainerSelectViewModel> GetTrainerForDropDown()
+        {
+            var trainer=_unitOfWork.GetRepository<Trainer>().GetAll();
+            return _mapper.Map<IEnumerable<TrainerSelectViewModel>>(trainer);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetCategoryForDropDown()
+        {
+
+            var Category = _unitOfWork.GetRepository<Category>().GetAll();
+            return _mapper.Map<IEnumerable<CategorySelectViewModel>>(Category);
         }
 
 

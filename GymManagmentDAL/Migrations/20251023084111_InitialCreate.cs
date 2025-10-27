@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GymManagmentDAL.Data.Migrations
+namespace GymManagmentDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate: Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,8 @@ namespace GymManagmentDAL.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate"),
+                    //phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
@@ -42,13 +42,13 @@ namespace GymManagmentDAL.Data.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     builderNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     street = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    city = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                    city = table.Column<string>(type: "varchar(50)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.Id);
                     table.CheckConstraint("GymUserValidEmailCheck", "Email like '_%@_%._%'");
-                    table.CheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%");
+                    table.CheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%'");
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +58,7 @@ namespace GymManagmentDAL.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "varchar(50)", maxLength: 200, nullable: false),
                     DurationDays = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -78,7 +78,7 @@ namespace GymManagmentDAL.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     specialties = table.Column<int>(type: "int", nullable: false),
-                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate"),
+                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
@@ -87,13 +87,13 @@ namespace GymManagmentDAL.Data.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     builderNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     street = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    city = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                    city = table.Column<string>(type: "varchar(50)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_trainers", x => x.Id);
                     table.CheckConstraint("GymUserValidEmailCheck1", "Email like '_%@_%._%'");
-                    table.CheckConstraint("GymUserValidPhoneCheck1", "Phone like '01%' and Phone Not like '%[^0-9]%");
+                    table.CheckConstraint("GymUserValidPhoneCheck1", "Phone like '01%' and Phone Not like '%[^0-9]%'");
                 });
 
             migrationBuilder.CreateTable(
@@ -101,8 +101,8 @@ namespace GymManagmentDAL.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Weight = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
+                    Height = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
                     BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -126,7 +126,7 @@ namespace GymManagmentDAL.Data.Migrations
                     MemberID = table.Column<int>(type: "int", nullable: false),
                     planID = table.Column<int>(type: "int", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -165,7 +165,7 @@ namespace GymManagmentDAL.Data.Migrations
                 {
                     table.PrimaryKey("PK_sessions", x => x.Id);
                     table.CheckConstraint("SessionCapacityCheck", "Capacity Between 1 and 25");
-                    table.CheckConstraint("SessionEndCheck", "EndDate>StartDate");
+                    table.CheckConstraint("SessionEndCheck", "EndTime > StartTime");
                     table.ForeignKey(
                         name: "FK_sessions_Categories_CategoryID",
                         column: x => x.CategoryID,

@@ -27,7 +27,13 @@ namespace GymManagmentDAL.Data.Context
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<HealthRecord>()
+            .Property(h => h.Height)
+            .HasPrecision(5, 2);
 
+            modelBuilder.Entity<HealthRecord>()
+                .Property(h => h.Weight)
+                .HasPrecision(5, 2);
 
 
         }

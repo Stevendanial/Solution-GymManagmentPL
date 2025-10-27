@@ -4,19 +4,16 @@ using GymManagmentDAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GymManagmentDAL.Data.Migrations
+namespace GymManagmentDAL.Migrations
 {
     [DbContext(typeof(GymDBContext))]
-    [Migration("20251007163018_InitialCreate")]
-    partial class InitialCreate
+    partial class GymDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +33,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("CatogaryName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -62,7 +59,8 @@ namespace GymManagmentDAL.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Height")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -71,7 +69,8 @@ namespace GymManagmentDAL.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -90,7 +89,7 @@ namespace GymManagmentDAL.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("JoinDate")
-                        .HasDefaultValueSql("GetDate");
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<DateOnly>("DateofBirth")
                         .HasColumnType("date");
@@ -98,7 +97,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -106,12 +105,12 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -131,7 +130,7 @@ namespace GymManagmentDAL.Data.Migrations
                         {
                             t.HasCheckConstraint("GymUserValidEmailCheck", "Email like '_%@_%._%'");
 
-                            t.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%");
+                            t.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%'");
                         });
                 });
 
@@ -174,7 +173,7 @@ namespace GymManagmentDAL.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("StartDate")
-                        .HasDefaultValueSql("GetDate");
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -203,7 +202,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("DurationDays")
                         .HasColumnType("int");
@@ -214,7 +213,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
@@ -274,7 +273,7 @@ namespace GymManagmentDAL.Data.Migrations
                         {
                             t.HasCheckConstraint("SessionCapacityCheck", "Capacity Between 1 and 25");
 
-                            t.HasCheckConstraint("SessionEndCheck", "EndDate>StartDate");
+                            t.HasCheckConstraint("SessionEndCheck", "EndTime > StartTime");
                         });
                 });
 
@@ -290,7 +289,7 @@ namespace GymManagmentDAL.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("HireDate")
-                        .HasDefaultValueSql("GetDate");
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<DateOnly>("DateofBirth")
                         .HasColumnType("date");
@@ -298,7 +297,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -306,12 +305,12 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -332,7 +331,7 @@ namespace GymManagmentDAL.Data.Migrations
                             t.HasCheckConstraint("GymUserValidEmailCheck", "Email like '_%@_%._%'")
                                 .HasName("GymUserValidEmailCheck1");
 
-                            t.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%")
+                            t.HasCheckConstraint("GymUserValidPhoneCheck", "Phone like '01%' and Phone Not like '%[^0-9]%'")
                                 .HasName("GymUserValidPhoneCheck1");
                         });
                 });
@@ -356,19 +355,19 @@ namespace GymManagmentDAL.Data.Migrations
                             b1.Property<string>("BuilderNumber")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("builderNumber");
 
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(30)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("city");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("street");
 
                             b1.HasKey("MemberId");
@@ -450,19 +449,19 @@ namespace GymManagmentDAL.Data.Migrations
                             b1.Property<string>("BuilderNumber")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("builderNumber");
 
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(30)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("city");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("varchar")
+                                .HasColumnType("varchar(50)")
                                 .HasColumnName("street");
 
                             b1.HasKey("TrainerId");

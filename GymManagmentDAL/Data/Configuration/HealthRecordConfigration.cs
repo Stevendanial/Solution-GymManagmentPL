@@ -13,6 +13,7 @@ namespace GymManagmentDAL.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<HealthRecord> builder)
         {
+
             builder.ToTable("Member")
                     .HasKey(x => x.Id);
 
